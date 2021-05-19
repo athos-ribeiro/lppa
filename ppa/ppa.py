@@ -48,7 +48,7 @@ class PPA():
         try:
             return self.me.getPPAByName(name=self.name)
         except NotFound:
-            logger.warning(
+            logger.debug(
                 'No %s PPA available. Try creating one with the "create" method', self.name
             )
 
@@ -61,7 +61,10 @@ class PPA():
         rtype: lazr.restfulclient.resource.Entry
         """
         ppa = self.get()
-        if not ppa:
+        if ppa:
+            logger.debug('A PPA named %s already exists', self.name)
+        else:
+            logger.debug('Creating PPA: %s', self.name)
             displayname = displayname or self.name
             # TODO: why isn't the documented person.createPPA working?
             ppa = self.team.createPPA(
@@ -69,9 +72,10 @@ class PPA():
                 displayname=displayname,
                 description=description,
             )
-        processors_api = Processors()
+        processors_api = Processors(session=self.session)
         processor_urls = []
         for arch in self.architectures:
+            logger.debug('Fetching processor url for "%s"', arch)
             processor_urls.append(processors_api.get_by_name(arch).self_link)
         ppa.setProcessors(processors=processor_urls)
         return ppa

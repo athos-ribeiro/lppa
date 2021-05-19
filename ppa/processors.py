@@ -26,8 +26,14 @@ logger = logging.getLogger(__name__)
 
 class Processors():
     """Launchpad builder platform's abstractions"""
-    def __init__(self):
-        self.session = Session().get_session()
+    def __init__(self, session=None):
+        """Initializer
+
+        param session: launchpadlib.Launchpad, an LP session to be reused
+        """
+        if not session:
+            session = Session().get_session()
+        self.session = session
         self.processors = self.session.processors
 
     def list(self):
