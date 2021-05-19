@@ -49,7 +49,7 @@ class PPA():
             return self.me.getPPAByName(name=self.name)
         except NotFound:
             logger.warning(
-                f'No "{self.name}" PPA available. Try creating one with the "create" method'
+                'No %s PPA available. Try creating one with the "create" method', self.name
             )
 
     def create(self, displayname=None, description=None):

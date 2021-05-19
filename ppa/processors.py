@@ -49,5 +49,5 @@ class Processors():
         try:
             return self.processors.getByName(name=name)
         except NotFound:
-            logger.error(f'Could not find processor: "{name}"')
+            logger.error('Could not find processor: %s', name)
             raise
