@@ -78,4 +78,17 @@ class PPA():
             logger.debug('Fetching processor url for "%s"', arch)
             processor_urls.append(processors_api.get_by_name(arch).self_link)
         ppa.setProcessors(processors=processor_urls)
+        logger.info('PPA: "%s" is available for arches: %s', self.name, self.get_processors(ppa))
         return ppa
+
+    def get_processors(self, ppa):
+        """get the processors enabled for the PPA archive
+
+        param ppa: lazr.restfulclient.resource.Entry, An Entry representing an LP archive
+        return: List of strings representing LP processor names such as amd64
+        rtype: list
+        """
+        arches = []
+        for arch in ppa.processors:
+            arches.append(arch.name)
+        return arches
