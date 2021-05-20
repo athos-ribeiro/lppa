@@ -34,7 +34,12 @@ class Processors():
         if not session:
             session = Session().get_session()
         self.session = session
-        self.processors = self.session.processors
+        self.processors = None
+
+    def fetch(self):
+        """Query LP to set the processors attribute"""
+        if self.processors is None:
+            self.processors = self.session.processors
 
     def list(self):
         """List all processors available in LP instance
@@ -42,6 +47,8 @@ class Processors():
         return: A list with all processors available in a LP instance
         rtype: list
         """
+        if not self.processors:
+            self.fetch()
         return [p.name for p in self.processors]
 
     def get_by_name(self, name):
@@ -52,6 +59,8 @@ class Processors():
         return: An Entry containing data on the processor specified by name
         rtype: lazr.restfulclient.resource.Entry
         """
+        if not self.processors:
+            self.fetch()
         try:
             return self.processors.getByName(name=name)
         except NotFound:
