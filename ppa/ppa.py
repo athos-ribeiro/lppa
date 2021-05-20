@@ -38,57 +38,83 @@ class PPA():
         self.me = self.session.me
         self.team = self.session.people[self.me.name]
         self.architectures = architectures
+        self.archive = None
 
-    def get(self):
-        """get the PPA archive interface
-
-        return: An Entry representing a launchpad archive
-        rtype: lazr.restfulclient.resource.Entry
-        """
+    def set_existing_archive(self):
+        """Set the PPA archive interface if one already exists with the requested name"""
         try:
-            return self.me.getPPAByName(name=self.name)
+            self.archive = self.me.getPPAByName(name=self.name)
         except NotFound:
             logger.debug(
                 'No %s PPA available. Try creating one with the "create" method', self.name
             )
 
     def create(self, displayname=None, description=None):
-        """get the PPA archive interface
+        """Create the PPA archive
 
         param displayname: str, the display name for the PPA to be managed
         param description: str, the description for the PPA to be managed
         return: An Entry representing a launchpad archive
         rtype: lazr.restfulclient.resource.Entry
         """
-        ppa = self.get()
-        if ppa:
+        self.set_existing_archive()
+        if self.archive:
             logger.debug('A PPA named %s already exists', self.name)
         else:
             logger.debug('Creating PPA: %s', self.name)
             displayname = displayname or self.name
-            # TODO: why isn't the documented person.createPPA working?
             ppa = self.team.createPPA(
                 name=self.name,
                 displayname=displayname,
                 description=description,
             )
+            self.archive = ppa
         processors_api = Processors(session=self.session)
         processor_urls = []
         for arch in self.architectures:
             logger.debug('Fetching processor url for "%s"', arch)
             processor_urls.append(processors_api.get_by_name(arch).self_link)
         ppa.setProcessors(processors=processor_urls)
-        logger.info('PPA: "%s" is available for arches: %s', self.name, self.get_processors(ppa))
+        logger.info('PPA: "%s" is available for arches: %s', self.name, self.get_processors())
         return ppa
 
-    def get_processors(self, ppa):
+    def get_processors(self):
         """get the processors enabled for the PPA archive
 
-        param ppa: lazr.restfulclient.resource.Entry, An Entry representing an LP archive
+        raises RuntimeError: PPA was not created yet
         return: List of strings representing LP processor names such as amd64
         rtype: list
         """
+        self.set_existing_archive()
         arches = []
-        for arch in ppa.processors:
-            arches.append(arch.name)
+        if not self.archive:
+            logger.warning('PPA "%s" does not exist', self.name)
+        else:
+            for arch in self.archive.processors:
+                arches.append(arch.name)
+
         return arches
+
+    def get_dput_str(self):
+        """Get a dput upload string
+
+        The returned string will be in the form:
+
+        dput ppa:LP_USERNAME/PPA_NAME <source.changes>
+
+        return: dput command to upload an artifact to the PPA
+        rtype: str
+        """
+        return f'dput ppa:{self.me.name}/{self.name} <source.changes>'
+
+    def delete(self):
+        """Request removal of the PPA archive
+
+        param ppa: lazr.restfulclient.resource.Entry, An Entry representing an LP archive
+        """
+        self.set_existing_archive()
+        if not self.archive:
+            logger.warning('PPA "%s" does not exist; No action taken', self.name)
+            return
+        logger.info('Requesting removal of PPA "%s"', self.name)
+        self.archive.lp_delete()
