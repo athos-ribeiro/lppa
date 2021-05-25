@@ -17,3 +17,5 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import logging
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
+
+__version__ = '0.1.0.dev1'
