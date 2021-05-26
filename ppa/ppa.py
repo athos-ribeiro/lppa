@@ -54,8 +54,6 @@ class PPA():
 
         param displayname: str, the display name for the PPA to be managed
         param description: str, the description for the PPA to be managed
-        return: An Entry representing a launchpad archive
-        rtype: lazr.restfulclient.resource.Entry
         """
         self.set_existing_archive()
         if self.archive:
@@ -63,20 +61,18 @@ class PPA():
         else:
             logger.debug('Creating PPA: %s', self.name)
             displayname = displayname or self.name
-            ppa = self.team.createPPA(
+            self.archive = self.team.createPPA(
                 name=self.name,
                 displayname=displayname,
                 description=description,
             )
-            self.archive = ppa
         processors_api = Processors(session=self.session)
         processor_urls = []
         for arch in self.architectures:
             logger.debug('Fetching processor url for "%s"', arch)
             processor_urls.append(processors_api.get_by_name(arch).self_link)
-        ppa.setProcessors(processors=processor_urls)
+        self.archive.setProcessors(processors=processor_urls)
         logger.info('PPA: "%s" is available for arches: %s', self.name, self.get_processors())
-        return ppa
 
     def get_processors(self):
         """get the processors enabled for the PPA archive
