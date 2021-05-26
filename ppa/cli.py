@@ -14,7 +14,38 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import argparse
+
+from ppa.ppa import PPA
+
+DESCRIPTION = 'CLI for Handling launchpad PPAs'
+PROCESSORS = ['amd64', 'arm64', 's390x', 'ppc64el', 'armhf', 'armel', 'i386', 'powerpc']
+
+
+def create(args):
+    arches = args.processors or ['amd64', 'i386']
+    ppa = PPA(args.name, arches)
+    ppa.create()
+    print(f'New PPA created: {args.name}')
+    print(f'PPA Packages page: {ppa.archive.web_link}/+packages')
+    print('You can upload packages to this PPA using:')
+    print(f'\t{ppa.get_dput_str()}')
 
 
 def run():
-    print("hello, ppa!")
+    parser = argparse.ArgumentParser(description=DESCRIPTION)
+
+    subparsers = parser.add_subparsers(help='sub-command help')
+
+    parser_create = subparsers.add_parser('create', help='Create new PPA')
+    parser_create.add_argument('name', help='Name of the PPA to be created')
+    parser_create.add_argument(
+        'processors',
+        nargs='*',
+        # choices=PROCESSORS,
+        help='List of launchpad processors to be enabled in the new PPA'
+    )
+    parser_create.set_defaults(func=create)
+
+    args = parser.parse_args()
+    args.func(args)
