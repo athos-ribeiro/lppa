@@ -1,0 +1,30 @@
+name: ppa CI
+on:
+  push:
+    branches:
+      - main
+  pull_requests:
+    branches:
+      - main
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - run: apt install -y make
+      - run: make devel
+      - run: flake8 tests ppa
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9"]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - run: apt install -y make
+      - run: make devel
+      - run: pytest -v tests
