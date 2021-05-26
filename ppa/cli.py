@@ -24,6 +24,8 @@ PROCESSORS = ['amd64', 'arm64', 's390x', 'ppc64el', 'armhf', 'armel', 'i386', 'p
 
 def create(args):
     arches = args.processors or ['amd64', 'i386']
+    if 'all' in arches:
+        arches = PROCESSORS
     ppa = PPA(args.name, arches)
     ppa.create()
     print(f'New PPA created: {args.name}')
@@ -43,7 +45,10 @@ def run():
         'processors',
         nargs='*',
         # choices=PROCESSORS,
-        help='List of launchpad processors to be enabled in the new PPA'
+        help=(
+            'List of launchpad processors to be enabled in the new PPA. Use "all" to enable all '
+            'architectures. If no value is provided, assume amd64 and i386'
+        )
     )
     parser_create.set_defaults(func=create)
 
