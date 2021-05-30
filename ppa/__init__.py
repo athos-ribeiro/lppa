@@ -14,8 +14,42 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import configparser
 import logging
-
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
+import sys
 
 __version__ = '0.1.0.dev1'
+
+_defaults = {
+    'log_level': 'debug',
+    'log_file': 'stderr'
+}
+
+_log_level_map = {
+    'debug': logging.DEBUG,
+    'info': logging.INFO,
+    'warning': logging.WARNING,
+    'error': logging.ERROR,
+    'critical': logging.CRITICAL
+}
+
+config = configparser.ConfigParser(defaults=_defaults)
+
+_log_level_str = config['DEFAULT']['log_level']
+_log_level = _log_level_map[_log_level_str]
+
+_config_args = {'level': _log_level, 'format': '%(asctime)s %(levelname)s %(name)s: %(message)s'}
+
+if config['DEFAULT']['log_file'] in ('stderr', 'stdout'):
+    _config_args['stream'] = getattr(sys, config['DEFAULT']['log_file'])
+else:
+    _config_args['filename'] = config['DEFAULT']['log_file']
+
+logging.basicConfig(**_config_args)
+
+_logger = logging.getLogger(__name__)
+_logger.debug(
+    'Loaded PPA version %s with configurations %s from default values',
+    __version__,
+    dict(config['DEFAULT'])
+)
