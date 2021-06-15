@@ -16,10 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from launchpadlib.launchpad import Launchpad
 
-
-API_VERSION = 'devel'
-APP_NAME = 'ppa'
-LP_ENV = 'production'  # or staging
+from ppa import config
 
 
 class AuthenticationError(Exception):
@@ -28,7 +25,7 @@ class AuthenticationError(Exception):
 
 class Session():
     """Launchpad session interface"""
-    def __init__(self, anonymous=False, lp_env=LP_ENV):
+    def __init__(self, anonymous=False, lp_env=config['DEFAULT']['lp_env']):
         """Initializer
 
         param anonymous: bool, whether to use an anonimous session
@@ -48,9 +45,9 @@ class Session():
         """
         try:
             session = Launchpad.login_with(
-                APP_NAME,
+                config['DEFAULT']['app_name'],
                 self.lp_env,
-                version=API_VERSION,
+                version=config['DEFAULT']['api_version'],
                 credential_save_failed=self._no_auth_failure
             )
         except AuthenticationError:
@@ -67,7 +64,9 @@ class Session():
         return: Launchpad session
         rtype: launchpadlib.launchpad.Launchpad
         """
-        return Launchpad.login_anonymously(APP_NAME, self.lp_env, version=API_VERSION)
+        return Launchpad.login_anonymously(
+            config['DEFAULT']['app_name'], self.lp_env, version=config['DEFAULT']['api_version']
+        )
 
     def _no_auth_failure(self):
         """Callback for Launchpad.login_with credential_save_failed param"""

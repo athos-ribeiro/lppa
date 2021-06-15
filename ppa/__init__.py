@@ -22,7 +22,10 @@ __version__ = '0.1.0.dev1'
 
 _defaults = {
     'log_level': 'debug',
-    'log_file': 'stderr'
+    'log_file': 'stderr',
+    'api_version': 'devel',
+    'app_name': 'ppa',
+    'lp_env': 'production'  # or staging
 }
 
 _log_level_map = {
