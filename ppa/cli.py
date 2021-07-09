@@ -34,6 +34,11 @@ def create(args):
     print(f'\t{ppa.get_dput_str()}')
 
 
+def delete(args):
+    ppa = PPA(args.name, None)
+    ppa.delete()
+
+
 def run():
     parser = argparse.ArgumentParser(description=DESCRIPTION)
 
@@ -51,6 +56,10 @@ def run():
         )
     )
     parser_create.set_defaults(func=create)
+
+    parser_delete = subparsers.add_parser('delete', help='Delete existing PPA')
+    parser_delete.add_argument('name', help='Name of the PPA to be deleted')
+    parser_delete.set_defaults(func=delete)
 
     args = parser.parse_args()
     args.func(args)
