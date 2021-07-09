@@ -24,7 +24,7 @@ for additional information.
 To create a new PPA, run
 
 ```
-ppa create [all|arch, ...]
+ppa create PPA_NAME [all|arch, ...]
 ```
 
 where arch is a Launchpad processor (you can pass multiple architectures here)
@@ -40,6 +40,12 @@ The currently available Launchpad processors are
 - armel
 - i386
 - powerpc
+- 
+### Delete an existing PPA
+
+```
+ppa delete PPA_NAME
+```
 
 ## Development
 
