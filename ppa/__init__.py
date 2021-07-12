@@ -21,7 +21,7 @@ import sys
 __version__ = '0.1.1.dev1'
 
 _defaults = {
-    'log_level': 'debug',
+    'log_level': 'warning',
     'log_file': 'stderr',
     'api_version': 'devel',
     'app_name': 'ppa',
