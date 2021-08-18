@@ -47,6 +47,14 @@ The currently available Launchpad processors are
 ppa delete PPA_NAME
 ```
 
+### List user's PPAs
+
+```
+ppa list
+```
+
+This will print a list with the names of the user's available PPAs
+
 ## Development
 
 Read the Makefile.
