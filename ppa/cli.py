@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import argparse
 
 from ppa.ppa import PPA
+import ppa.utils
 
 DESCRIPTION = 'CLI for Handling launchpad PPAs'
 PROCESSORS = ['amd64', 'arm64', 's390x', 'ppc64el', 'armhf', 'armel', 'i386', 'powerpc']
@@ -37,6 +38,12 @@ def create(args):
 def delete(args):
     ppa = PPA(args.name, None)
     ppa.delete()
+
+
+def list(args):
+    ppas = ppa.utils.ppa_list()
+    for ppa_name in ppas:
+        print(ppa_name)
 
 
 def run():
@@ -60,6 +67,9 @@ def run():
     parser_delete = subparsers.add_parser('delete', help='Delete existing PPA')
     parser_delete.add_argument('name', help='Name of the PPA to be deleted')
     parser_delete.set_defaults(func=delete)
+
+    parser_list = subparsers.add_parser('list', help="List user's PPAs")
+    parser_list.set_defaults(func=list)
 
     args = parser.parse_args()
     args.func(args)
