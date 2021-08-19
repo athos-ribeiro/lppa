@@ -27,23 +27,35 @@ def create(args):
     arches = args.processors or ['amd64', 'i386']
     if 'all' in arches:
         arches = PROCESSORS
-    ppa = PPA(args.name, arches)
-    ppa.create()
+    archive = PPA(args.name, arches)
+    archive.create()
     print(f'New PPA created: {args.name}')
-    print(f'PPA Packages page: {ppa.archive.web_link}/+packages')
+    print(f'PPA Packages page: {archive.archive.web_link}/+packages')
     print('You can upload packages to this PPA using:')
-    print(f'\t{ppa.get_dput_str()}')
+    print(f'\t{archive.get_dput_str()}')
 
 
 def delete(args):
-    ppa = PPA(args.name, None)
-    ppa.delete()
+    archive = PPA(args.name, None)
+    archive.delete()
 
 
 def list(args):
     ppas = ppa.utils.ppa_list()
     for ppa_name in ppas:
         print(ppa_name)
+
+
+def info(args):
+    archive = PPA(args.name, None)
+    archive.set_existing_archive()
+    if not archive.archive:
+        argparse.ArgumentParser.exit(-1, f'"{args.name}" is not a valid PPA')
+    print(f'PPA Packages page: {archive.archive.web_link}/+packages')
+    print('You can upload packages to this PPA using:')
+    print(f'\t{archive.get_dput_str()}')
+    if args.verbose:
+        print(f'"{archive.name}" is available for arches: {archive.get_processors()}')
 
 
 def run():
@@ -70,6 +82,16 @@ def run():
 
     parser_list = subparsers.add_parser('list', help="List user's PPAs")
     parser_list.set_defaults(func=list)
+
+    parser_info = subparsers.add_parser('info', help='Fetch information on existing PPA')
+    parser_info.add_argument('name', help='Name of the PPA of interest')
+    parser_info.add_argument(
+        '-v',
+        '--verbose',
+        help='Turn on verbose output for additional information about the archive',
+        action='store_true'
+    )
+    parser_info.set_defaults(func=info)
 
     args = parser.parse_args()
     args.func(args)
