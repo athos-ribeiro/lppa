@@ -40,7 +40,7 @@ The currently available Launchpad processors are
 - armel
 - i386
 - powerpc
-- 
+
 ### Delete an existing PPA
 
 ```
