@@ -2,7 +2,10 @@
 
 check:
 	flake8 tests ppa
-	pytest -v tests
+	coverage run --source=ppa -m pytest -v tests
+
+coverage: check
+	coverage report
 
 devel:
 	pip install -r requirements-dev.txt
@@ -11,7 +14,7 @@ devel:
 	rm setup.py
 
 clean:
-	rm -rf *.egg-info dist build .pytest_cache */__pycache__
+	rm -rf *.egg-info dist build .pytest_cache */__pycache__ .coverage
 
 build: clean
 	python -m build
