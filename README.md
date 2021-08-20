@@ -55,6 +55,19 @@ ppa list
 
 This will print a list with the names of the user's available PPAs
 
+### Fetch PPA information
+
+Often, you may want to retrieve an URL for a PPA packages page or quickly fetch
+a dput command to upload packages to a PPA. That can be achieved through the
+`info` command.
+
+```
+ppa info PPA_NAME
+```
+
+Moreover, passing the `-v` option to the info command will also display the
+architectures for which the PPA can build packages.
+
 ## Development
 
 Read the Makefile.
