@@ -16,7 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import logging
 
-from lazr.restfulclient.errors import NotFound
+from lazr.restfulclient.errors import BadRequest, NotFound
 
 from ppa.auth import Session
 from ppa.processors import Processors
@@ -113,4 +113,12 @@ class PPA():
             logger.warning('PPA "%s" does not exist; No action taken', self.name)
             return
         logger.info('Requesting removal of PPA "%s"', self.name)
-        self.archive.lp_delete()
+        try:
+            self.archive.lp_delete()
+        except BadRequest as err:
+            logger.warn(
+                'Error requesting "%s" removal. %s (%s): %s',
+                self.name, err.response.reason,
+                err.response.status,
+                err.content.decode()
+            )
