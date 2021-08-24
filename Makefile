@@ -18,3 +18,7 @@ clean:
 
 build: clean
 	python -m build
+	twine check dist/*
+
+publish: build
+	twine upload dist/*
