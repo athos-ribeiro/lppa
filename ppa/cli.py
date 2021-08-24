@@ -27,6 +27,8 @@ def create(args):
     arches = args.processors or ['amd64', 'i386']
     if 'all' in arches:
         arches = PROCESSORS
+    elif any(arch not in PROCESSORS for arch in arches):
+        argparse.ArgumentParser.exit(-1, f'Invalid "{arches}" is not a subset of "{PROCESSORS}"')
     archive = PPA(args.name, arches)
     archive.create()
     print(f'New PPA created: {args.name}')
