@@ -16,8 +16,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import argparse
 
-from ppa.ppa import PPA
-import ppa.utils
+from lppa.ppa import PPA
+import lppa.utils
 
 DESCRIPTION = 'CLI for Handling launchpad PPAs'
 PROCESSORS = ['amd64', 'arm64', 's390x', 'ppc64el', 'armhf', 'armel', 'i386', 'powerpc']
@@ -43,7 +43,7 @@ def delete(args):
 
 
 def list(args):
-    ppas = ppa.utils.ppa_list()
+    ppas = lppa.utils.ppa_list()
     for ppa_name in ppas:
         print(ppa_name)
 

@@ -16,17 +16,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from unittest.mock import Mock, patch
 
-from ppa.processors import Processors
+from lppa.processors import Processors
 
 
-@patch('ppa.auth.Session.get_session', return_value='stub_session')
+@patch('lppa.auth.Session.get_session', return_value='stub_session')
 def test_instance_without_session(MockedSession):
     processors = Processors()
     MockedSession.assert_called_once()
     assert processors.session == 'stub_session'
 
 
-@patch('ppa.auth.Session.get_session')
+@patch('lppa.auth.Session.get_session')
 def test_instance_with_session(MockedSession):
     session = Mock()
     processors = Processors(session)

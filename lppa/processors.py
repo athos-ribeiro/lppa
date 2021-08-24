@@ -18,7 +18,7 @@ import logging
 
 from lazr.restfulclient.errors import NotFound
 
-from ppa.auth import Session
+from lppa.auth import Session
 
 
 logger = logging.getLogger(__name__)

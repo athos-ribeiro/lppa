@@ -16,7 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from unittest.mock import patch
 
-from ppa.ppa import PPA
+from lppa.ppa import PPA
 
 
 @patch('launchpadlib.launchpad.Launchpad.login_with')

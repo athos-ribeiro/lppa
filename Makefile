@@ -1,8 +1,8 @@
 .PHONY: clean devel check build
 
 check:
-	flake8 tests ppa
-	coverage run --source=ppa -m pytest -v tests
+	flake8 tests lppa
+	coverage run --source=lppa -m pytest -v tests
 
 coverage: check
 	coverage report

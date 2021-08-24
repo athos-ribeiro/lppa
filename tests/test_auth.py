@@ -18,7 +18,7 @@ from unittest.mock import patch
 
 import pytest
 
-from ppa import auth
+from lppa import auth
 
 
 @patch('launchpadlib.launchpad.Launchpad.login_with')

@@ -24,7 +24,7 @@ _defaults = {
     'log_level': 'warning',
     'log_file': 'stderr',
     'api_version': 'devel',
-    'app_name': 'ppa',
+    'app_name': 'lppa',
     'lp_env': 'production'  # or staging
 }
 

@@ -16,7 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import requests
 
-from ppa.auth import Session
+from lppa.auth import Session
 
 
 def ppa_list():

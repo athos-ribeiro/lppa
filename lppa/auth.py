@@ -16,7 +16,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from launchpadlib.launchpad import Launchpad
 
-from ppa import config
+from lppa import config
 
 
 class AuthenticationError(Exception):

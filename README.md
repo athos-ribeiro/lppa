@@ -1,4 +1,4 @@
-# Python PPA
+# lppa
 
 Command line tool to create Launchpad PPAs and push deb source packages to them
 
@@ -10,11 +10,11 @@ pip install .
 
 ## Usage
 
-ppa ships a `ppa` command line application to interact with Launchpad PPAs.
+lppa ships an `lppa` command line application to interact with Launchpad PPAs.
 Run
 
 ```
-ppa --help
+lppa --help
 ```
 
 for additional information.
@@ -24,7 +24,7 @@ for additional information.
 To create a new PPA, run
 
 ```
-ppa create PPA_NAME [all|arch, ...]
+lppa create PPA_NAME [all|arch, ...]
 ```
 
 where arch is a Launchpad processor (you can pass multiple architectures here)
@@ -44,13 +44,13 @@ The currently available Launchpad processors are
 ### Delete an existing PPA
 
 ```
-ppa delete PPA_NAME
+lppa delete PPA_NAME
 ```
 
 ### List user's PPAs
 
 ```
-ppa list
+lppa list
 ```
 
 This will print a list with the names of the user's available PPAs
@@ -62,7 +62,7 @@ a dput command to upload packages to a PPA. That can be achieved through the
 `info` command.
 
 ```
-ppa info PPA_NAME
+lppa info PPA_NAME
 ```
 
 Moreover, passing the `-v` option to the info command will also display the

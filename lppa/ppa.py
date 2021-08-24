@@ -18,8 +18,8 @@ import logging
 
 from lazr.restfulclient.errors import BadRequest, NotFound
 
-from ppa.auth import Session
-from ppa.processors import Processors
+from lppa.auth import Session
+from lppa.processors import Processors
 
 
 logger = logging.getLogger(__name__)
