@@ -5,7 +5,7 @@ Command line tool to create Launchpad PPAs and push deb source packages to them
 ## Installation
 
 ```
-pip install .
+pip install lppa
 ```
 
 ## Usage
