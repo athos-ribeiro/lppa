@@ -1,4 +1,4 @@
-name: ppa CI
+name: lppa CI
 on:
   push:
     branches:
@@ -16,7 +16,7 @@ jobs:
           python-version: "3.9"
       - run: sudo apt install -y make
       - run: make devel
-      - run: flake8 tests ppa
+      - run: flake8 tests lppa
   tests:
     runs-on: ubuntu-latest
     strategy:
