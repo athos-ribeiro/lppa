@@ -96,4 +96,7 @@ def run():
     parser_info.set_defaults(func=info)
 
     args = parser.parse_args()
+    if not getattr(args, 'func', None):
+        argparse.ArgumentParser.exit(-1, parser.format_help())
+
     args.func(args)
