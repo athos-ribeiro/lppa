@@ -70,10 +70,28 @@ architectures for which the PPA can build packages.
 
 ## Development
 
-Read the Makefile.
-
 Run `make devel` to set the development environment up (a python virtual
 environment is recommended).
 
 Run `make check` to run the test suite and ensure the development environment
 is up to date.
+
+You can use `make coverage` to ensure code coverage is not drastically reduced
+by new changes (if proposing changes, try to write some tests for them).
+
+For instance, a complete bootstrap script would look like:
+
+```
+# apt install -y python3-virtualenv python3-virtualenvwrapper
+$ mkvirtualenv lppa
+$ workon lppa
+$ make devel
+$ make check
+```
+
+### Releasing
+
+- Change `lppa/__init__.py` to set the version to be published
+- Create a new git tag for the new version
+- Run `make publish` to build a new version and push it to PyPI
+- Change `lppa/__init__.py` to set the version to the next development version
