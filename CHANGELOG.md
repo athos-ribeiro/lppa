@@ -1,5 +1,5 @@
 lppa 0.2.0 (2021-08-24)
-==========
+=======================
 
 - Rename project to avoid PyPI packaging conflicts
 
@@ -14,6 +14,6 @@ Features
 
 
 ppa 0.1.0 (2021-06-22)
-==========
+======================
 
 - Initial release
