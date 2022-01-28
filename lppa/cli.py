@@ -24,12 +24,15 @@ PROCESSORS = ['amd64', 'arm64', 's390x', 'ppc64el', 'armhf', 'armel', 'i386', 'p
 
 
 def create(args):
+    pocket = 'Updates'
+    if args.proposed:
+        pocket = 'Proposed'
     arches = args.processors or ['amd64', 'i386']
     if 'all' in arches:
         arches = PROCESSORS
     elif any(arch not in PROCESSORS for arch in arches):
         argparse.ArgumentParser.exit(-1, f'Invalid "{arches}" is not a subset of "{PROCESSORS}"')
-    archive = PPA(args.name, arches)
+    archive = PPA(args.name, arches, pocket=pocket)
     archive.create()
     print(f'New PPA created: {args.name}')
     print(f'PPA Packages page: {archive.archive.web_link}/+packages')
@@ -75,6 +78,11 @@ def run():
             'List of launchpad processors to be enabled in the new PPA. Use "all" to enable all '
             'architectures. If no value is provided, assume amd64 and i386'
         )
+    )
+    parser_create.add_argument(
+        '--proposed',
+        help='Prefer build dependencies from the -proposed pocket',
+        action='store_true'
     )
     parser_create.set_defaults(func=create)
 

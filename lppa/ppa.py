@@ -24,21 +24,31 @@ from lppa.processors import Processors
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_COMPONENT = 'multiverse'
+DEFAULT_POCKET = 'Updates'
+VALID_POCKETS = ('Updates', 'Proposed', 'Backports', 'Security', 'Release')
+
 
 class PPA():
     """Launchpad PPA manager class"""
-    def __init__(self, name, architectures):
+    def __init__(self, name, architectures, pocket=DEFAULT_POCKET):
         """Initializer
 
         param name: str, the name for the PPA to be managed
         param architectures: list[str], list of launchpad processors, such as arm64
+        param pocket: str, pocket for fetching build-dependencies from
         """
+        if pocket not in VALID_POCKETS:
+            raise ValueError(f'{pocket} not in {VALID_POCKETS}')
+
         self.name = name
         self.session = Session().get_session()
         self.me = self.session.me
         self.team = self.session.people[self.me.name]
         self.architectures = architectures
         self.archive = None
+        self.pocket = pocket
+        self.component = DEFAULT_COMPONENT
 
     def set_existing_archive(self):
         """Set the PPA archive interface if one already exists with the requested name"""
@@ -72,7 +82,19 @@ class PPA():
             logger.debug('Fetching processor url for "%s"', arch)
             processor_urls.append(processors_api.get_by_name(arch).self_link)
         self.archive.setProcessors(processors=processor_urls)
-        logger.info('PPA: "%s" is available for arches: %s', self.name, self.get_processors())
+        if self.pocket != DEFAULT_POCKET:
+            ubuntu = self.archive.distribution
+            self.archive.addArchiveDependency(
+                dependency=ubuntu.main_archive,
+                component=self.component,
+                pocket=self.pocket
+            )
+        logger.info(
+            'PPA: "%s" is available for pocket %s in arches: %s',
+            self.name,
+            self.pocket,
+            self.get_processors(),
+        )
 
     def get_processors(self):
         """get the processors enabled for the PPA archive
