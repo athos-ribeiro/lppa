@@ -1,3 +1,27 @@
+lppa 0.2.1 (2022-01-30)
+=======================
+
+Features
+--------
+
+- Add --proposed option to the create command to create a PPA for the proposed
+  pocket
+
+
+Bugfixes
+--------
+
+- Print CLI help when no args are passed
+
+
+Improved Documentation
+----------------------
+
+- Update development documentation
+- Update documented pip installation method
+- Add CHANGELOG.md file
+
+
 lppa 0.2.0 (2021-08-24)
 =======================
 

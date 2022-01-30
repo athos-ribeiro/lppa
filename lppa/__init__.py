@@ -18,7 +18,7 @@ import configparser
 import logging
 import sys
 
-__version__ = '0.2.1.dev1'
+__version__ = '0.2.1'
 
 _defaults = {
     'log_level': 'warning',
