@@ -17,10 +17,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import argparse
 
 from lppa.ppa import PPA
+import lppa.constants
 import lppa.utils
-
-DESCRIPTION = 'CLI for Handling launchpad PPAs'
-PROCESSORS = ['amd64', 'arm64', 's390x', 'ppc64el', 'armhf', 'armel', 'i386', 'powerpc']
 
 
 def create(args):
@@ -29,9 +27,11 @@ def create(args):
         pocket = 'Proposed'
     arches = args.processors or ['amd64', 'i386']
     if 'all' in arches:
-        arches = PROCESSORS
-    elif any(arch not in PROCESSORS for arch in arches):
-        argparse.ArgumentParser.exit(-1, f'Invalid "{arches}" is not a subset of "{PROCESSORS}"')
+        arches = lppa.constants.PROCESSORS
+    elif any(arch not in lppa.constants.PROCESSORS for arch in arches):
+        argparse.ArgumentParser.exit(
+            -1, f'Invalid "{arches}" is not a subset of "{lppa.constants.PROCESSORS}"'
+        )
     archive = PPA(args.name, arches, pocket=pocket)
     archive.create()
     print(f'New PPA created: {args.name}')
@@ -64,7 +64,7 @@ def info(args):
 
 
 def run():
-    parser = argparse.ArgumentParser(description=DESCRIPTION)
+    parser = argparse.ArgumentParser(description=lppa.constants.CLI_DESCRIPTION)
 
     subparsers = parser.add_subparsers(help='sub-command help')
 
@@ -73,7 +73,7 @@ def run():
     parser_create.add_argument(
         'processors',
         nargs='*',
-        # choices=PROCESSORS,
+        # choices=constants.PROCESSORS,
         help=(
             'List of launchpad processors to be enabled in the new PPA. Use "all" to enable all '
             'architectures. If no value is provided, assume amd64 and i386'
