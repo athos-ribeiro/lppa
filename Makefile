@@ -6,6 +6,7 @@ check:
 
 coverage: check
 	coverage report
+	coverage html
 
 devel:
 	pip install -r requirements-dev.txt
@@ -14,7 +15,7 @@ devel:
 	rm setup.py
 
 clean:
-	rm -rf *.egg-info dist build .pytest_cache */__pycache__ .coverage
+	rm -rf *.egg-info dist build .pytest_cache */__pycache__ .coverage htmlcov
 
 build: clean
 	python -m build
