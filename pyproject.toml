@@ -8,3 +8,8 @@ package = "lppa"
 directory = "changes"
 issue_format = ""
 title_format = "lppa {version} ({project_date})"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-v"
+testpaths = ["tests"]
