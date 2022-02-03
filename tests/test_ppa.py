@@ -15,8 +15,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from unittest.mock import patch
+import pytest
 
 from lppa.ppa import PPA
+import lppa.constants
 
 
 @patch('launchpadlib.launchpad.Launchpad.login_with')
@@ -25,6 +27,23 @@ def test_set_archive(MockedSession):
     assert ppa.archive is None
     ppa.set_existing_archive()
     assert ppa.archive is not None
+    assert ppa.pocket == lppa.constants.DEFAULT_POCKET
+
+
+@patch('launchpadlib.launchpad.Launchpad.login_with')
+def test_set_archive_with_pocket(MockedSession):
+    ppa = PPA('ppa_name', ['arch'], pocket='Proposed')
+    assert ppa.archive is None
+    ppa.set_existing_archive()
+    assert ppa.archive is not None
+    assert ppa.pocket == 'Proposed'
+
+
+@patch('launchpadlib.launchpad.Launchpad.login_with')
+def test_set_archive_with_invalid_pocket(MockedSession):
+    with pytest.raises(ValueError) as err:
+        PPA('ppa_name', ['arch'], pocket='invalidValue')
+    assert str(err.value) == f'invalidValue not in {lppa.constants.VALID_POCKETS}'
 
 
 def test_set_archive_not_found():
