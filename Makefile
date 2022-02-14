@@ -1,5 +1,9 @@
 .PHONY: clean devel check build
 
+build: clean
+	python -m build
+	twine check dist/*
+
 check:
 	flake8 tests lppa
 	coverage run --source=lppa -m pytest -v tests
@@ -16,10 +20,6 @@ devel:
 
 clean:
 	rm -rf *.egg-info dist build .pytest_cache */__pycache__ .coverage htmlcov
-
-build: clean
-	python -m build
-	twine check dist/*
 
 publish: build
 	twine upload dist/*
