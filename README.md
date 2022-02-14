@@ -91,7 +91,12 @@ $ make check
 
 ### Releasing
 
+There is a `make release` target which will
+
 - Change `lppa/__init__.py` to set the version to be published
-- Create a new git tag for the new version
-- Run `make publish` to build a new version and push it to PyPI
-- Change `lppa/__init__.py` to set the version to the next development version
+- Update the CHANGELOG.md file with towncrier entries
+- Commit the changes above and tag the repository
+- Push the changes to PyPI (login required)
+- Add a final commit bumping the package version to a new development one
+
+Finally, a manual `git push` (including tags) is required.
