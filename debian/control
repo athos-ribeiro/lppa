@@ -1,0 +1,22 @@
+Source: lppa
+Section: python
+Priority: optional
+Maintainer: Athos Ribeiro <athos.ribeiro@canonical.com>
+Build-Depends: debhelper-compat (= 13),
+               dh-python,
+               pybuild-plugin-pyproject,
+               python3-all,
+               python3-build,
+               python3-launchpadlib,
+               python3-pytest,
+               python3-requests,
+               python3-setuptools
+Standards-Version: 4.6.0
+Homepage: https://github.com/athos-ribeiro/lppa
+X-Python3-Version: >= 3.2
+
+Package: lppa
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${python3:Depends}
+Description: command line tool to create Launchpad PPAs

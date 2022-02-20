@@ -1,0 +1,5 @@
+lppa (0.2.2~dev) UNRELEASED; urgency=low
+
+  * Initial release. Closes: #nnnn
+
+ -- Athos Ribeiro <athos.ribeiro@canonical.com>  Wed, 25 Aug 2021 13:32:18 -0300
