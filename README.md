@@ -1,3 +1,11 @@
+# DISCONTINUED
+
+This has been discontinued in favor of
+[ppa-dev-tools](https://code.launchpad.net/~bryce/ppa-dev-tools/+git/ppa-dev-tools-1).
+
+While this is still useful for examples, I no longer intend to proceed with
+development for this tool. Please, use ppa-dev-tools instead.
+
 # lppa
 
 Command line tool to create Launchpad PPAs and push deb source packages to them
