@@ -17,5 +17,5 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 CLI_DESCRIPTION = 'CLI for Handling launchpad PPAs'
 DEFAULT_COMPONENT = 'multiverse'
 DEFAULT_POCKET = 'Updates'
-PROCESSORS = ['amd64', 'arm64', 's390x', 'ppc64el', 'armhf', 'armel', 'i386', 'powerpc']
+PROCESSORS = ['amd64', 'arm64', 's390x', 'ppc64el', 'armhf', 'armel', 'i386', 'powerpc', 'riscv64']
 VALID_POCKETS = ('Updates', 'Proposed', 'Backports', 'Security', 'Release')
