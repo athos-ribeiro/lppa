@@ -34,4 +34,4 @@ def mocked_request(*args, **kwargs):
 @patch('requests.get', side_effect=mocked_request)
 def test_ppa_list(MockedRequest, MockedSession):
     ppas = lppa.utils.ppa_list()
-    assert ppas == ['ppa1', 'ppa2']
+    assert list(ppas) == ['ppa1', 'ppa2']
