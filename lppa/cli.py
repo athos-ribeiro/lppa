@@ -46,8 +46,7 @@ def delete(args):
 
 
 def list(args):
-    ppas = lppa.utils.ppa_list()
-    for ppa_name in ppas:
+    for ppa_name in lppa.utils.ppa_list():
         print(ppa_name)
 
 

@@ -23,7 +23,9 @@ def ppa_list():
     session = Session().get_session()
     me = session.me
     ppas_url = me.ppas_collection_link
-    r = requests.get(ppas_url)
-    ppas = r.json()
-    ppa_names = [ppa['name'] for ppa in ppas['entries']]
-    return sorted(ppa_names)
+    while ppas_url:
+        r = requests.get(ppas_url)
+        ppas = r.json()
+        ppas_url = ppas.get('next_collection_link')
+        for ppa in ppas['entries']:
+            yield ppa['name']
