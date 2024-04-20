@@ -1,0 +1,2 @@
+Support PPA list pagination. The PPA lists are paginated. To correctly fetch
+the list of PPAs, we need to keep iterating over the paginated lists.
