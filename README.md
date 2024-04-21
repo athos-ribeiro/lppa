@@ -8,7 +8,13 @@ development for this tool. Please, use ppa-dev-tools instead.
 
 # lppa
 
-Command line tool to create Launchpad PPAs and push deb source packages to them
+Command line tool to create Launchpad PPAs and push deb source packages to them.
+
+While this tool is intended to be used by distribution developers who often
+need to prepare and push packages to test PPAs, this can also be used by
+developers who wish to distribute their software through PPAs. For the latter,
+please make sure to check the documentation since the default values are
+designed to enhance the former use cases.
 
 ## Installation
 
