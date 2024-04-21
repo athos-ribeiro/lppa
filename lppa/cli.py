@@ -25,7 +25,7 @@ def create(args):
     pocket = 'Updates'
     if args.proposed:
         pocket = 'Proposed'
-    arches = args.processors or ['amd64', 'i386']
+    arches = args.processors or ['all']
     if 'all' in arches:
         arches = lppa.constants.PROCESSORS
     elif any(arch not in lppa.constants.PROCESSORS for arch in arches):
@@ -75,7 +75,7 @@ def run():
         # choices=constants.PROCESSORS,
         help=(
             'List of launchpad processors to be enabled in the new PPA. Use "all" to enable all '
-            'architectures. If no value is provided, assume amd64 and i386'
+            'architectures. If no value is provided, assume all'
         )
     )
     parser_create.add_argument(
