@@ -64,6 +64,7 @@ def info(args):
 
 def run():
     parser = argparse.ArgumentParser(description=lppa.constants.CLI_DESCRIPTION)
+    parser.add_argument('--version', action='version', version=lppa.__version__)
 
     subparsers = parser.add_subparsers(help='sub-command help')
 
