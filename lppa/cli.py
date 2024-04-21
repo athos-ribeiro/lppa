@@ -81,7 +81,8 @@ def run():
     parser_create.add_argument(
         '--proposed',
         help='Prefer build dependencies from the -proposed pocket',
-        action='store_true'
+        action=argparse.BooleanOptionalAction,
+        default=True
     )
     parser_create.set_defaults(func=create)
 

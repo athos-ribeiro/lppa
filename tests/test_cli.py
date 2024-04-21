@@ -37,6 +37,17 @@ def test_create_with_default_values(MockedPPA):
         'amd64', 'arm64', 's390x', 'ppc64el', 'armhf', 'armel', 'i386',
         'powerpc', 'riscv64'
     ]
+    args = Namespace(name="testppa", proposed=True, processors=None)
+    lppa.cli.create(args)
+    MockedPPA.assert_called_with("testppa", SUPPORTED_ARCHES, pocket="Proposed")
+
+
+@patch('lppa.cli.PPA')
+def test_create_with_no_proposed(MockedPPA):
+    SUPPORTED_ARCHES = [
+        'amd64', 'arm64', 's390x', 'ppc64el', 'armhf', 'armel', 'i386',
+        'powerpc', 'riscv64'
+    ]
     args = Namespace(name="testppa", proposed=False, processors=None)
     lppa.cli.create(args)
     MockedPPA.assert_called_with("testppa", SUPPORTED_ARCHES, pocket="Updates")
