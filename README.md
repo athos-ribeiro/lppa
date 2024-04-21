@@ -42,7 +42,8 @@ lppa create PPA_NAME [all|arch, ...]
 ```
 
 where arch is a Launchpad processor (you can pass multiple architectures here)
-or `all` to enable all available architectures.
+or `all` to enable all available architectures. If no architecture is passed,
+`all` is assumed.
 
 The currently available Launchpad processors are
 
@@ -54,6 +55,7 @@ The currently available Launchpad processors are
 - armel
 - i386
 - powerpc
+- riscv64
 
 ### Delete an existing PPA
 
