@@ -5,7 +5,7 @@ lppa 0.3.0 (2024-04-21)
 
 - Add RiscV to supported architectures
 - If no architectures are provided when creating a new PPA, lppa will create a
-  PPA with all supported architectures enables. This changes the previous default
+  PPA with all supported architectures enabled. This changes the previous default
   behavior where only x86_64 and i386 would be enabled by default.
 - The --proposed PPA creation option is now the default value for the create
   subcommand. A new --no-proposed option was added to disable the -proposed
@@ -24,7 +24,7 @@ lppa 0.3.0 (2024-04-21)
 
 ### Misc
 
-- 
+- Include relevant sources in the sdist tarball
 
 
 lppa 0.2.1 (2022-01-30)
